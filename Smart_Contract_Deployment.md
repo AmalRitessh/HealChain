@@ -104,7 +104,7 @@ contract Migrations {
 }
 ```
 
-- Copy HealChain's Contracts from [github](https://github.com/AmalRitessh/HealChain/tree/main/contracts) `HealChain/contracts/` to `HealChain-Contract/contracts/` folder.
+- Copy HealChain's Contracts from github `HealChain/contracts/` to `HealChain-Contract/contracts/` folder.
 ```bash
 cp ../HealChain/contracts/* ./contracts/
 ```
@@ -128,10 +128,27 @@ HealChain-Contract/
 sudo npm install @truffle/hdwallet-provider
 ```
 ---
-### Build and Deploy with Truffle
+### Build and Deploy
 
 - Compile after all the above files have been modified
-
 ```bash
 truffle compile
 ```
+
+- Deploy the smart contracts to the healchain network
+```bash
+truffle migrate --network healchain
+```
+
+- Interactive JavaScript console that connects to your healchain network
+```bash
+truffle console --network healchain
+```
+
+Succesfully Deployed HealChain smart contracts on Besu Private network !!
+
+## Retrieving ABI and Contract Address for UI Integration
+
+- The ABI is stored in the file `./build/contracts/crowdfunding.json` after compiling the smart contract. This is required for interacting with the contract from a frontend application.
+
+- The contract address is assigned when deploying the smart contract using `truffle migrate --network healchain`. This address is essential for linking the frontend with the deployed contract on the blockchain.
