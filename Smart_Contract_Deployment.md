@@ -104,7 +104,7 @@ contract Migrations {
 }
 ```
 
-- Copy HealChain's Contracts from github `HealChain/contracts/` to `HealChain-Contract/contracts/` folder.
+- Copy HealChain's Contracts from [github](https://github.com/AmalRitessh/HealChain/tree/main/contracts) `HealChain/contracts/` to `HealChain-Contract/contracts/` folder.
 ```bash
 cp ../HealChain/contracts/* ./contracts/
 ```
