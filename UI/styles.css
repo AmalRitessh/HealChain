@@ -176,35 +176,37 @@ button:hover {
 
 
 /* createUser */
+/* Center the form container */
 #userFormSection {
-  margin: 20px auto; 
+  margin: 20px auto; /* Center the section horizontally */
   padding: 20px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px; 
-  width: 100%;
-  text-align: center; 
+  max-width: 400px; /* Set a max-width for the form */
+  width: 100%; /* Ensure it takes full width up to max-width */
+  text-align: center; /* Center-align text and inline elements */
 }
 
+/* Center the form itself */
 #userForm {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* Center-align form items horizontally */
 }
 
-
+/* Style for input fields */
 #userForm input {
   margin-bottom: 15px;
   padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 0.9em;
-  width: 80%;
-  max-width: 250px; 
+  width: 80%; /* Set a relative width */
+  max-width: 250px; /* Set a maximum width */
 }
 
-
+/* Style for buttons */
 #userForm button {
   margin-top: 10px;
   padding: 12px 20px;
@@ -213,15 +215,15 @@ button:hover {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width: 80%; 
-  max-width: 250px; 
+  width: 80%; /* Match the width of input fields */
+  max-width: 250px; /* Match the max-width of input fields */
 }
 
 #userForm button:hover {
   background-color: #45a049;
 }
 
-
+/* Success message styling */
 .success-message {
   margin-top: 15px;
   padding: 10px;
@@ -230,8 +232,122 @@ button:hover {
   text-align: center;
   border-radius: 4px;
   font-size: 1.1em;
-  display: none; 
-  width: 80%;
-  max-width: 250px; 
+  display: none; /* Hidden by default */
+  width: 80%; /* Match the width of input fields */
+  max-width: 250px; /* Match the max-width of input fields */
 }
 
+
+
+
+
+/* updateUser */
+#updateUserFormPopup {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 41%; /* Adjusted to move the form higher */
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+}
+
+#updateUserForm {
+  display: flex;
+  flex-direction: column;
+}
+
+#updateUserForm label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#updateUserForm input {
+  margin-bottom: 15px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 100%;
+}
+
+#updateUserForm button {
+  margin-top: 10px;
+  padding: 12px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+#updateUserForm button:hover {
+  background-color: #45a049;
+}
+
+
+
+/* View User */
+#viewUserFormPopup {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 45%; /* Adjusted to move the form higher */
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+}
+
+#viewUserForm {
+  display: flex;
+  flex-direction: column;
+}
+
+#viewUserForm label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#viewUserForm input {
+  margin-bottom: 15px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 100%;
+}
+
+#viewUserForm button {
+  margin-top: 10px;
+  padding: 12px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+#viewUserForm button:hover {
+  background-color: #45a049;
+}
+
+#userDetails {
+  margin-top: 20px;
+  text-align: left;
+}
+
+#userDetails p {
+  margin: 10px 0;
+}
