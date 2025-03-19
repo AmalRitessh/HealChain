@@ -6,7 +6,7 @@
     <title>Crowdfunding DApp</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.3.6/dist/web3.min.js"></script>
-    <script src="createUser.js" defer></script> 
+
 </head>
 <body>
   <header class="header">
@@ -27,10 +27,12 @@
                     <a href="index.html" class="navbar-link">Create Campaign</a>
                 </li>
             </ul>
+            <button id="connectWalletButton" class="btn btn-primary">Connect Wallet</button>
             <button id="createUserButton" class="btn btn-primary">User</button>
         </nav>
     </div>
   </header>
+  <script src="createUser.js" defer></script> 
 
   <!-- Regular Form for Creating User -->
   <section id="userFormSection">
