@@ -1,0 +1,457 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+}
+
+/* Header Styles */
+header {
+  background-color: #FFF8DB;
+  color: #000000;
+  padding: 1em;
+  text-align: center;
+}
+
+header .container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .container .heading {
+  color: #7D8ABC;
+}
+
+header .logo img {
+  width: 100px;
+}
+
+header .navbar {
+  display: flex;
+  align-items: center;
+}
+
+header .navbar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+header .navbar-item {
+  margin-right: 20px;
+}
+
+header .navbar-link {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+}
+
+/* Button Styles (Reused for all buttons) */
+button, .btn {
+  padding: 10px 15px;
+  margin: 10px;
+  border: none;
+  background-color: #7D8ABC;
+  color: white;
+  cursor: pointer;
+  font-size: 1.2em;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+button:hover, .btn:hover {
+  background-color: #304463;
+}
+
+/* Statistics Section */
+#stats {
+  margin: 20px;
+  padding: 20px;
+  background-color: #d4d4d4;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box p {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+/* Campaigns Section */
+#campaignsList {
+  margin: 20px;
+}
+
+.campaigns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.campaign-box {
+  background-color: #FFF8DB;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.campaign-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.campaign-box h3 {
+  margin-top: 0;
+}
+
+/* Popup Form Styles (Reused for all popups) */
+.popup-form {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #e2e2e2;
+  border: 2px solid #7D8ABC;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+}
+
+.popup-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.popup-form input, .popup-form textarea {
+  margin-bottom: 15px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1.1em;
+}
+
+.popup-form button {
+  margin-top: 10px;
+  padding: 12px 20px;
+}
+
+/* Campaign Details Section */
+#campaignDetails {
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#campaignInfo {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#campaignInfo h3 {
+  margin-top: 0;
+}
+
+#campaignInfo ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#campaignInfo ul li {
+  margin-bottom: 10px;
+}
+
+.campaign-image {
+  width: 100%; /* Makes the image responsive */
+  max-width: 200px; /* Prevents it from getting too large */
+  height: 200px; /* Ensures uniform height */
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Search Campaign Section */
+#searchCampaign {
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-bar input {
+  padding: 10px;
+  border: 1px solid #f8ddef;
+  border-radius: 4px;
+  font-size: 1em;
+  flex: 1;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  background-color: #7D8ABC;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.search-bar button:hover {
+  background-color: #304463;
+}
+
+/* Donate Campaign Section */
+#donateCampaign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  padding: 20px;
+  background-color: #FFF8DB; /* Light yellow background */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px; /* Adjust the width as needed */
+  margin: 50px auto; /* Center the rectangle */
+}
+
+#donateCampaign h2 {
+  margin-top: 0;
+  color: #7D8ABC; /* Blueish color for the heading */
+  font-size: 1.8em;
+  text-align: center;
+}
+
+.donate-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.donate-form label {
+  font-weight: bold;
+  color: #000000; /* Black color for labels */
+}
+
+.donate-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  background-color: #ffffff; /* White background for inputs */
+  color: #000000; /* Black text color */
+}
+
+.donate-form input::placeholder {
+  color: #999; /* Light gray placeholder text */
+}
+
+.donate-form button {
+  padding: 10px 20px;
+  background-color: #7D8ABC; /* Blueish color for the button */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.donate-form button:hover {
+  background-color: #304463; /* Darker blue on hover */
+}
+
+/* Responsive Design Adjustments */
+@media screen and (max-width: 768px) {
+  header .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header .navbar-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header .navbar-item {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .popup-form {
+    max-width: 90%;
+  }
+
+  .campaigns-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+/* createUser Section */
+#userFormSection {
+  margin: 20px auto; /* Center the section horizontally */
+  padding: 20px;
+  background-color: #FFF8DB; /* Light yellow background */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px; /* Set a max-width for the form */
+  width: 100%; /* Ensure it takes full width up to max-width */
+  text-align: center; /* Center-align text and inline elements */
+}
+
+#userForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center-align form items horizontally */
+}
+
+#userForm input {
+  margin-bottom: 15px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 80%; /* Set a relative width */
+  max-width: 250px; /* Set a maximum width */
+}
+
+#userForm button {
+  margin-top: 10px;
+  padding: 12px 20px;
+  width: 80%; /* Match the width of input fields */
+  max-width: 250px; /* Match the max-width of input fields */
+}
+
+.success-message {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #7D8ABC; /* Blueish color for success message */
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 1.1em;
+  display: none; /* Hidden by default */
+  width: 80%; /* Match the width of input fields */
+  max-width: 250px; /* Match the max-width of input fields */
+}
+
+/* updateUser Section */
+#updateUserFormPopup {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 41%; /* Adjusted to move the form higher */
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #FFF8DB; /* Light yellow background */
+  border: 2px solid #7D8ABC; /* Blueish border */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+}
+
+#updateUserForm {
+  display: flex;
+  flex-direction: column;
+}
+
+#updateUserForm label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #000000; /* Black text for labels */
+}
+
+#updateUserForm input {
+  margin-bottom: 15px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 100%;
+}
+
+#updateUserForm button {
+  margin-top: 10px;
+  padding: 12px 20px;
+  width: 100%;
+}
+
+/* viewUser Section */
+#viewUserFormPopup {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 45%; /* Adjusted to move the form higher */
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #FFF8DB; /* Light yellow background */
+  border: 2px solid #7D8ABC; /* Blueish border */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+}
+
+#viewUserForm {
+  display: flex;
+  flex-direction: column;
+}
+
+#viewUserForm label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #000000; /* Black text for labels */
+}
+
+#viewUserForm input {
+  margin-bottom: 15px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 100%;
+}
+
+#viewUserForm button {
+  margin-top: 10px;
+  padding: 12px 20px;
+  width: 100%;
+}
+
+#userDetails {
+  margin-top: 20px;
+  text-align: left;
+}
+
+#userDetails p {
+  margin: 10px 0;
+}
+
+/* Connect Wallet Button */
+#connectWalletButton {
+  margin-left: 10px; /* Add some spacing between buttons */
+}
