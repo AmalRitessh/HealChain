@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.3.6/dist/web3.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </head>
+
 <body>
     <header class="header">
         <div class="container">
@@ -26,16 +28,44 @@
                     <li class="navbar-item">
                         <a href="{{ url_for('create_user') }}" class="navbar-link">User</a>
                     </li>
-                    
                 </ul>
-                <a href="index.html?create=true" class="btn">Create Campaign</a>
+                <button id="createCampaignButton" class="btn">Create Campaign</button>
                 <button id="connectWalletButton" class="btn">Connect Wallet</button>
             </nav>
         </div>
     </header>
+
+    <!-- Popup Form for Creating Campaign -->
+    <div id="campaignFormPopup" class="popup-form">
+        <form id="campaignForm">
+            <h2>Create New Campaign</h2>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+    
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+    
+            <label for="targetAmount">Target Amount:</label>
+            <input type="number" id="targetAmount" name="targetAmount" required>
+    
+            <label for="deadline">Deadline:</label>
+            <input type="number" id="deadline" name="deadline" required>
+    
+            <label for="medicalProof">Medical Proof:</label>
+            <input type="text" id="medicalProof" name="medicalProof" placeholder="image URL" required>
+    
+            <label for="image">Image:</label>
+            <input type="text" id="image" name="image" placeholder="image URL" required>
+    
+            <button type="submit">Submit</button>
+            <button type="button" id="cancelCampaignButton">Cancel</button>
+        </form>
+    </div>
+
     <div class="view-all-button" style="text-align: left; margin: 20px;">
         <a href="{{ url_for('index') }}" class="btn">View All Campaigns</a>
     </div>
+
     <section id="searchCampaign">
         <h2>Search Campaign by ID</h2>
         <div class="search-bar">
@@ -44,7 +74,6 @@
         </div>
     </section>
     
-
     <section id="campaignDetails">
         <h2>Campaign Details</h2>
         <div id="campaignInfo" class="campaign-box">

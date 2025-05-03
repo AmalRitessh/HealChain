@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crowdfunding DApp</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.3.6/dist/web3.min.js"></script>
-    
-
 </head>
-<body>
-  <header class="header">
-    <div class="container">
-        <h1 class="heading">HEAL CHAIN.</h1>
-        <nav class="navbar">
-            
-            <ul class="navbar-list">
-                <li class="navbar-item">
-                    <a href="{{ url_for('index') }}" class="navbar-link">Home</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="{{ url_for('view_campaign') }}" class="navbar-link">View Campaign</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="{{ url_for('donate_campaign') }}" class="navbar-link">Donate to Campaign</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="{{ url_for('create_user') }}" class="navbar-link">User</a>
-                </li>
-            </ul>
-            <button id="createCampaignButton" class="btn">Create Campaign</button>
-            <button id="connectWalletButton" class="btn">Connect Wallet</button>
-        </nav>
-    </div>
-</header>
 
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="heading">HEAL CHAIN.</h1>
+            <nav class="navbar">
+                <ul class="navbar-list">
+                    <li class="navbar-item">
+                        <a href="{{ url_for('index') }}" class="navbar-link">Home</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="{{ url_for('view_campaign') }}" class="navbar-link">View Campaign</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="{{ url_for('donate_campaign') }}" class="navbar-link">Donate to Campaign</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="{{ url_for('create_user') }}" class="navbar-link">User</a>
+                    </li>
+                </ul>
+                <button id="createCampaignButton" class="btn">Create Campaign</button>
+                <button id="connectWalletButton" class="btn">Connect Wallet</button>
+            </nav>
+        </div>
+    </header>
 
     <section id="stats">
         <h2>Live Statistics</h2>
@@ -44,43 +42,39 @@
         </div>
     </section>
 
-   
-
     <!-- Popup Form for Creating Campaign -->
-<div id="campaignFormPopup" class="popup-form">
-  <form id="campaignForm">
-      <h2>Create New Campaign</h2>
-      <label for="title">Title:</label>
-      <input type="text" id="title" name="title" required>
+    <div id="campaignFormPopup" class="popup-form">
+        <form id="campaignForm">
+            <h2>Create New Campaign</h2>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
 
-      <label for="description">Description:</label>
-      <textarea id="description" name="description" required></textarea>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
 
-      <label for="targetAmount">Target Amount:</label>
-      <input type="number" id="targetAmount" name="targetAmount" required>
+            <label for="targetAmount">Target Amount:</label>
+            <input type="number" id="targetAmount" name="targetAmount" required>
 
-      <label for="deadline">Deadline:</label>
-      <input type="number" id="deadline" name="deadline" required>
+            <label for="deadline">Deadline:</label>
+            <input type="number" id="deadline" name="deadline" required>
 
-      <label for="medicalProof">Medical Proof:</label>
-      <input type="text" id="medicalProof" name="medicalProof" required>
+            <label for="medicalProof">Medical Proof:</label>
+            <input type="text" id="medicalProof" name="medicalProof" placeholder="image URL" required>
+        
+            <label for="image">Image:</label>
+            <input type="text" id="image" name="image" placeholder="image URL" required>
 
-      <!-- Add Image Field -->
-      <label for="image">Image:</label>
-      <input type="file" id="image" name="image" accept="image/*" required>
+            <button type="submit">Submit</button>
+            <button type="button" id="cancelCampaignButton">Cancel</button>
+        </form>
+    </div>
 
-      <button type="submit">Submit</button>
-      <button type="button" id="cancelButton">Cancel</button>
-  </form>
-</div>
-
-  <!-- Section to display campaigns -->
-<section id="campaignsList">
-    <h2>Active Campaigns</h2>
-    <div id="campaignsContainer" class="campaigns-grid"></div>
-</section>
+    <!-- Section to display campaigns -->
+    <section id="campaignsList">
+        <h2>Active Campaigns</h2>
+        <div id="campaignsContainer" class="campaigns-grid"></div>
+    </section>
   
-
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

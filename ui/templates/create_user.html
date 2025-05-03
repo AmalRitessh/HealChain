@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,105 +9,131 @@
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.3.6/dist/web3.min.js"></script>
 
 </head>
+
 <body>
-  <header class="header">
-    <div class="container">
-        <h1 class="heading">HEAL CHAIN.</h1>
-        <nav class="navbar">
-            <ul class="navbar-list">
-                
-                <li class="navbar-item">
-                    <a href="{{ url_for('index') }}" class="navbar-link">Home</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="{{ url_for('view_campaign') }}" class="navbar-link">View Campaign</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="{{ url_for('donate_campaign') }}" class="navbar-link">Donate to Campaign</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="{{ url_for('create_user') }}" class="navbar-link">User</a>
-                </li>
-                
-            </ul>
-            <a href="index.html?create=true" class="btn">Create Campaign</a>
-            <button id="connectWalletButton" class="btn">Connect Wallet</button>
-        </nav>
+    <header class="header">
+        <div class="container">
+            <h1 class="heading">HEAL CHAIN.</h1>
+            <nav class="navbar">
+                <ul class="navbar-list">
+                    <li class="navbar-item">
+                        <a href="{{ url_for('index') }}" class="navbar-link">Home</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="{{ url_for('view_campaign') }}" class="navbar-link">View Campaign</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="{{ url_for('donate_campaign') }}" class="navbar-link">Donate to Campaign</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="{{ url_for('create_user') }}" class="navbar-link">User</a>
+                    </li>
+                </ul>
+                <button id="createCampaignButton" class="btn">Create Campaign</button>
+                <button id="connectWalletButton" class="btn">Connect Wallet</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Popup Form for Creating Campaign -->
+    <div id="campaignFormPopup" class="popup-form">
+        <form id="campaignForm">
+            <h2>Create New Campaign</h2>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+    
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+    
+            <label for="targetAmount">Target Amount:</label>
+            <input type="number" id="targetAmount" name="targetAmount" required>
+    
+            <label for="deadline">Deadline:</label>
+            <input type="number" id="deadline" name="deadline" required>
+    
+            <label for="medicalProof">Medical Proof:</label>
+            <input type="text" id="medicalProof" name="medicalProof" placeholder="image URL" required>
+    
+            <label for="image">Image:</label>
+            <input type="text" id="image" name="image" placeholder="image URL" required>
+    
+            <button type="submit">Submit</button>
+            <button type="button" id="cancelCampaignButton">Cancel</button>
+        </form>
     </div>
-  </header>
  
+    <!-- Regular Form for Creating User -->
+    <section id="userFormSection">
+        <form id="userForm">
+            <h2>Create New User</h2>
+            <label for="userProof">URL to User Proof:</label>
+            <input type="text" id="userProof" name="userProof" required>
+    
+            <label for="userPan">URL to User PAN:</label>
+            <input type="text" id="userPan" name="userPan" required>
+    
+            <button type="submit">Submit</button>
+    
+            <!-- Success message placeholder -->
+            <div id="userCreationMessage" class="success-message" style="display: none;">
+                User Created Successfully!
+            </div>
+        </form>
+    </section>
 
-  <!-- Regular Form for Creating User -->
-  <section id="userFormSection">
-    <form id="userForm">
-        <h2>Create New User</h2>
-        <label for="userProof">URL to User Proof:</label>
-        <input type="text" id="userProof" name="userProof" required>
-  
-        <label for="userPan">URL to User PAN:</label>
-        <input type="text" id="userPan" name="userPan" required>
-  
-        <button type="submit">Submit</button>
-  
-        <!-- Success message placeholder -->
-        <div id="userCreationMessage" class="success-message" style="display: none;">
-            User Created Successfully!
-        </div>
-    </form>
-  </section>
+    <!-- Buttons for Update and View User -->
+    <div style="text-align: center; margin-top: 20px;">
+        <button id="openUpdateUserFormButton" class="btn btn-primary">Update User</button>
+        <button id="openViewUserFormButton" class="btn btn-primary">View User</button>
+    </div>
 
-  <!-- Buttons for Update and View User -->
-  <div style="text-align: center; margin-top: 20px;">
-    <button id="openUpdateUserFormButton" class="btn btn-primary">Update User</button>
-    <button id="openViewUserFormButton" class="btn btn-primary">View User</button>
-  </div>
+    <!-- Popup Form for Updating User -->
+    <div id="updateUserFormPopup" class="popup-form">
+        <form id="updateUserForm">
+            <h2>Update User Information</h2>
 
-  <!-- Popup Form for Updating User -->
-  <div id="updateUserFormPopup" class="popup-form">
-    <form id="updateUserForm">
-        <h2>Update User Information</h2>
+            <label for="userContact">User Contact:</label>
+            <input type="text" id="userContact" name="userContact" required>
 
-        <label for="userContact">User Contact:</label>
-        <input type="text" id="userContact" name="userContact" required>
+            <label for="userEmailAddress">User Email Address:</label>
+            <input type="email" id="userEmailAddress" name="userEmailAddress" required>
 
-        <label for="userEmailAddress">User Email Address:</label>
-        <input type="email" id="userEmailAddress" name="userEmailAddress" required>
+            <label for="userPreference">User Preference:</label>
+            <input type="text" id="userPreference" name="userPreference" required>
 
-        <label for="userPreference">User Preference:</label>
-        <input type="text" id="userPreference" name="userPreference" required>
+            <button type="submit">Update</button>
+            <button type="button" id="cancelUpdateUserButton">Cancel</button>
 
-        <button type="submit">Update</button>
-        <button type="button" id="cancelUpdateUserButton">Cancel</button>
+            <!-- Success message placeholder -->
+            <div id="updateUserSuccessMessage" class="success-message" style="display: none;">
+                User Updated Successfully!
+            </div>
+        </form>
+    </div>
 
-        <!-- Success message placeholder -->
-        <div id="updateUserSuccessMessage" class="success-message" style="display: none;">
-            User Updated Successfully!
-        </div>
-    </form>
-  </div>
+    <!-- Popup Form for Viewing User -->
+    <div id="viewUserFormPopup" class="popup-form">
+        <form id="viewUserForm">
+            <h2>View User Details</h2>
 
-  <!-- Popup Form for Viewing User -->
-  <div id="viewUserFormPopup" class="popup-form">
-    <form id="viewUserForm">
-        <h2>View User Details</h2>
+            <label for="userId">User ID (Address):</label>
+            <input type="text" id="userId" name="userId" required>
 
-        <label for="userId">User ID (Address):</label>
-        <input type="text" id="userId" name="userId" required>
+            <button type="button" id="fetchUserDetailsButton">Fetch Details</button>
+            <button type="button" id="cancelViewUserButton">Close</button>
 
-        <button type="button" id="fetchUserDetailsButton">Fetch Details</button>
-        <button type="button" id="cancelViewUserButton">Close</button>
+            <!-- User Details Display -->
+            <div id="userDetails" style="margin-top: 20px; text-align: left;">
+                <p><strong>Address:</strong> <span id="userAddress"></span></p>
+                <p><strong>Contact:</strong> <span id="userContactDetails"></span></p>
+                <p><strong>Email:</strong> <span id="userEmailDetails"></span></p>
+                <p><strong>Preference:</strong> <span id="userPreferenceDetails"></span></p>
+                <p><strong>Proof:</strong> <span id="userProofDetails"></span></p>
+                <p><strong>PAN:</strong> <span id="userPanDetails"></span></p>
+            </div>
+        </form>
+    </div>
 
-        <!-- User Details Display -->
-        <div id="userDetails" style="margin-top: 20px; text-align: left;">
-            <p><strong>Address:</strong> <span id="userAddress"></span></p>
-            <p><strong>Contact:</strong> <span id="userContactDetails"></span></p>
-            <p><strong>Email:</strong> <span id="userEmailDetails"></span></p>
-            <p><strong>Preference:</strong> <span id="userPreferenceDetails"></span></p>
-            <p><strong>Proof:</strong> <span id="userProofDetails"></span></p>
-            <p><strong>PAN:</strong> <span id="userPanDetails"></span></p>
-        </div>
-    </form>
-  </div>
-  <script src="{{ url_for('static', filename='js/script.js') }}" ></script> 
+    <script src="{{ url_for('static', filename='js/script.js') }}" ></script> 
 </body>
 </html>
