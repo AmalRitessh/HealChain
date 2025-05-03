@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crowdfunding DApp</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.3.6/dist/web3.min.js"></script>
 
 </head>
@@ -16,16 +16,16 @@
             <ul class="navbar-list">
                 
                 <li class="navbar-item">
-                    <a href="index.html" class="navbar-link">Home</a>
+                    <a href="{{ url_for('index') }}" class="navbar-link">Home</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="view_campaign.html" class="navbar-link">View Campaign</a>
+                    <a href="{{ url_for('view_campaign') }}" class="navbar-link">View Campaign</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="donate_campaign.html" class="navbar-link">Donate to Campaign</a>
+                    <a href="{{ url_for('donate_campaign') }}" class="navbar-link">Donate to Campaign</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="create_user.html" class="navbar-link">User</a>
+                    <a href="{{ url_for('create_user') }}" class="navbar-link">User</a>
                 </li>
                 
             </ul>
@@ -107,6 +107,6 @@
         </div>
     </form>
   </div>
-  <script src="../static/js/script.js" ></script> 
+  <script src="{{ url_for('static', filename='js/script.js') }}" ></script> 
 </body>
 </html>
