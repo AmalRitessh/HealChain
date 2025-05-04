@@ -160,7 +160,7 @@ IBFT-Network/
 Move the genesis.json file to the IBFT-Network directory.
 
 ```bash
-mv networkFiles/genesis.json IBFT-Network/
+mv IBFT-Network/networkFiles/genesis.json IBFT-Network/
 ```
 
 ---
