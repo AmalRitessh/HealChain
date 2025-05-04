@@ -75,42 +75,6 @@
         </div>
     </section>
 
-    <script>
-        // Function to handle donation
-        async function donateToCampaign() {
-            const campaignId = document.getElementById('campaignId').value;
-            const donationAmount = document.getElementById('donationAmount').value;
-
-            if (!campaignId || !donationAmount) {
-                alert("Please enter a valid Campaign ID and Donation Amount.");
-                return;
-            }
-
-            try {
-                // Convert donation amount to wei
-                const amountInWei = web3.utils.toWei(donationAmount, 'ether');
-
-                // Call the donateCampaign function in the smart contract
-                await contractInstance.methods.donateCampaign(campaignId).send({
-                    from: web3.eth.defaultAccount,
-                    value: amountInWei
-                });
-
-                alert("Donation successful! Thank you for your contribution.");
-                window.location.href = "index.html"; // Redirect to home page after donation
-            } catch (error) {
-                console.error("Error donating to campaign:", error);
-                alert("Failed to donate. Please check the console for details.");
-            }
-        }
-
-        // Add event listener to the donate button
-        document.getElementById('donateButton').addEventListener('click', donateToCampaign);
-
-        // Initialize Web3 and contract
-        document.addEventListener('DOMContentLoaded', async () => {
-            await initWeb3();
-        });
-    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
