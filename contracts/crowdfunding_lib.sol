@@ -33,7 +33,7 @@ contract lib{
     
     //--------------state_variable--------------
     address public contractOwner;
-    uint256 public noOfCampaings = 0;
+    uint256 public noOfCampaigns = 0;
     uint256 public noOfUsers = 0; 
     campaign camp;
     user userT;

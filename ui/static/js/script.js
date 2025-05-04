@@ -76,6 +76,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize counter
     document.getElementById('activeCampaigns').textContent = 0;
+
+    // Initialize totoal donations
+    document.getElementById('totalDonations').textContent = 0;
     
     // Hide user form section by default (NEW)
     document.getElementById('userFormSection').style.display = 'none';
@@ -85,8 +88,50 @@ document.addEventListener('DOMContentLoaded', function() {
 // FORM SUBMISSIONS
 // ======================
 
+// Fetching and Displaying all Campaigns
+window.addEventListener('load', async () => {
+    await fetchAndDisplayCampaigns();
+});
+
+async function fetchAndDisplayCampaigns() {
+    if (typeof window.ethereum === 'undefined') {
+        alert("Please install MetaMask to interact with the blockchain.");
+        return;
+    }
+
+    const web3 = new Web3(window.ethereum);
+    const accounts = await web3.eth.requestAccounts();
+    const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+    try {
+        const result = await contract.methods.getAllCampaign().call();
+
+        const campaignIds = result[0];
+        const titles = result[1];
+        const descriptions = result[2];
+        const imageUrl = result[3];
+        const amount = result[4];
+
+        const totalAmount = amount.reduce((acc, val) => acc + Number(val), 0);
+        updateTotalDonationsCount(totalAmount);
+        updateActiveCampaignsCount(campaignIds.length);
+
+        for (let i = 0; i < campaignIds.length; i++) {
+            const id = campaignIds[i];
+            const title = titles[i];
+            const description = descriptions[i];
+
+            displayCampaignDetails(id, title, description, imageUrl);
+        }
+    } catch (err) {
+        console.error("Failed to fetch campaigns:", err);
+        alert("Error fetching campaign list.");
+    }
+}
+
+
 // Campaign Form Submission
-document.getElementById('campaignForm')?.addEventListener('submit', function(e) {
+document.getElementById('campaignForm')?.addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const title = document.getElementById('title').value;
@@ -94,15 +139,41 @@ document.getElementById('campaignForm')?.addEventListener('submit', function(e) 
     const targetAmount = document.getElementById('targetAmount').value;
     const deadline = document.getElementById('deadline').value;
     const medicalProof = document.getElementById('medicalProof').value;
-    const imageFile = document.getElementById('image').files[0];
+    const imageUrl = document.getElementById('image').value;
     
-    let imageUrl = null;
-    if (imageFile) imageUrl = URL.createObjectURL(imageFile);
-    
-    displayCampaignDetails(title, description, targetAmount, deadline, medicalProof, imageUrl);
-    updateActiveCampaignsCount();
+    // displayCampaignDetails(title, description, targetAmount, deadline, medicalProof, imageUrl);
     closeCampaignForm();
     e.target.reset();
+
+    // Ensure Web3 is injected (e.g., by MetaMask)
+    if (typeof window.ethereum !== 'undefined') {
+        const web3 = new Web3(window.ethereum);
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const accounts = await web3.eth.getAccounts();
+
+        const contract = new web3.eth.Contract(contractABI, contractAddress); // Use your ABI and contract address
+
+        try {
+            const campaignId = await contract.methods.createCampaign(
+                title,
+                description,
+                web3.utils.toWei(targetAmount, 'ether'), // assuming targetAmount is in ETH
+                deadline,
+                medicalProof,
+                imageUrl
+            ).send({ from: accounts[0] });
+
+            console.log("Campaign created:", campaignId);
+            alert(`Campaign created successfully. ID: ${campaignId.events?.CampaignCreated?.returnValues?.campaignId || 'N/A'}`);
+        } catch (err) {
+            console.error("Error creating campaign:", err);
+            alert("Failed to create campaign.");
+        }
+    } else {
+        alert("Please install MetaMask to use this feature.");
+    }
+
+    fetchAndDisplayCampaigns();
 });
 
 // User Form Submission
@@ -146,7 +217,7 @@ document.getElementById('updateUserForm')?.addEventListener('submit', function(e
 // HELPER FUNCTIONS
 // ======================
 
-function displayCampaignDetails(title, description, targetAmount, deadline, medicalProof, imageUrl) {
+function displayCampaignDetails(id, title, description, imageUrl) {
     const container = document.getElementById('campaignsContainer');
     if (!container) return;
     
@@ -159,22 +230,25 @@ function displayCampaignDetails(title, description, targetAmount, deadline, medi
     
     campaignElement.innerHTML = `
         ${imageHTML}
-        <h3>${title}</h3>
-        <p>${description}</p>
-        <p>Target Amount: ${targetAmount} ETH</p>
-        <p>Deadline: ${deadline}</p>
-        <p>Medical Proof: ${medicalProof}</p>
+        <h2>Campaign ID: ${id}</h3>
+        <h3>Title:\n${title}</h3>
+        <p>Description:\n${description}</p>
         <a href="view_campaign.html" class="btn">View Campaign</a>
     `;
     
     container.appendChild(campaignElement);
 }
 
-function updateActiveCampaignsCount() {
+function updateActiveCampaignsCount(count) {
     const counter = document.getElementById('activeCampaigns');
     if (counter) {
-        const currentCount = parseInt(counter.innerText) || 0;
-        counter.innerText = currentCount + 1;
+        counter.innerText = count;
     }
 }
 
+function updateTotalDonationsCount(totalAmount) {
+    const counter = document.getElementById('totalDonations');
+    if (counter) {
+        counter.innerText = totalAmount;
+    }
+}

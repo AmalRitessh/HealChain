@@ -70,10 +70,10 @@ contract crowdfunding is lib{
         camp.amountCollected = 0;
         camp.medicalProof = _medicalProof;
         camp.image = _image;
-        campaigns[noOfCampaings] = camp;
-        noOfCampaings++;
+        campaigns[noOfCampaigns] = camp;
+        noOfCampaigns++;
 
-        return noOfCampaings-1;
+        return noOfCampaigns-1;
     } 
 
     function donateCampaign
@@ -109,22 +109,24 @@ contract crowdfunding is lib{
         )
             public
             view
-            returns (uint256[] memory, string[] memory, string[] memory)
+            returns (uint256[] memory, string[] memory, string[] memory, string[] memory, uint256[] memory)
     {
-        uint256[] memory campIds = new uint256[](noOfCampaings);
-        string[] memory titles = new string[](noOfCampaings);
-        string[] memory descriptions = new string[](noOfCampaings);
-        string[] memory img = new string[](noOfCampaings);
+        uint256[] memory campIds = new uint256[](noOfCampaigns);
+        string[] memory titles = new string[](noOfCampaigns);
+        string[] memory descriptions = new string[](noOfCampaigns);
+        string[] memory img = new string[](noOfCampaigns);
+        uint256[] memory amount = new uint256[](noOfCampaigns);
 
-        for(uint256 i = 0; i < noOfCampaings; i++){
+        for(uint256 i = 0; i < noOfCampaigns; i++){
             campIds[i] = i;
             campaign storage camp = campaigns[i];
             titles[i] = camp.title;
             descriptions[i] = camp.description;
             img[i] = camp.image;
+            amount[i] = camp.amountCollected;
         }
 
-        return (campIds, titles, descriptions);
+        return (campIds, titles, descriptions, img, amount);
     }
 
     function viewCampaign
