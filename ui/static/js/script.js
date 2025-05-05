@@ -2,7 +2,7 @@
 let web3;
 let contractInstance;
 let contractAddress = 'YOUR_CONTRACT_ADDRESS';
-let contractABI = [/* Your contract ABI */];
+let contractABI = [/* your contract ABI */];
 
 // Initialize web3
 async function initWeb3() {
@@ -65,7 +65,6 @@ async function initWeb3() {
         alert("MetaMask is not installed. Please install it to use this DApp.");
     }
 }
-
 
 // ======================
 // POPUP CONTROL FUNCTIONS
@@ -164,15 +163,15 @@ async function fetchAndDisplayCampaigns() {
             const id = campaignIds[i];
             const title = titles[i];
             const description = descriptions[i];
+            const img = imageUrl[i];
 
-            displayCampaignDetails(id, title, description, imageUrl);
+            displayCampaignDetails(id, title, description, img);
         }
     } catch (err) {
         console.error("Failed to fetch campaigns:", err);
         alert("Error fetching campaign list.");
     }
 }
-
 
 // Campaign Form Submission
 document.getElementById('campaignForm')?.addEventListener('submit', async function(e) {
@@ -185,7 +184,6 @@ document.getElementById('campaignForm')?.addEventListener('submit', async functi
     const medicalProof = document.getElementById('medicalProof').value;
     const imageUrl = document.getElementById('image').value;
     
-    // displayCampaignDetails(title, description, targetAmount, deadline, medicalProof, imageUrl);
     closeCampaignForm();
     e.target.reset();
 
@@ -246,6 +244,11 @@ document.getElementById('userForm')?.addEventListener('submit', async function(e
 
             console.log("User Created");
             alert("User Created");
+            const successMessage = document.getElementById('userCreationMessage');
+	    if (successMessage) {
+		successMessage.style.display = 'block';
+		setTimeout(() => successMessage.style.display = 'none', 3000);
+	    }
         } catch (err) {
             console.error("Error creating user:", err);
             alert("Failed to create user.");
@@ -253,13 +256,7 @@ document.getElementById('userForm')?.addEventListener('submit', async function(e
     } else {
         alert("Please install MetaMask to use this feature.");
     }
-    
-    const successMessage = document.getElementById('userCreationMessage');
-    if (successMessage) {
-        successMessage.style.display = 'block';
-        setTimeout(() => successMessage.style.display = 'none', 3000);
-    }
-    
+     
     e.target.reset();
 });
 
@@ -322,27 +319,15 @@ async function displayUserDetails(userAddress) {
     try {
         const result = await contract.methods.viewUser(userAddress).call();
 
-        const [
-            userId,
-            userProof,
-            userRole,
-            amountRecived,
-            amountDonated,
-            userContact,
-            userEmailAddress,
-            userPreference,
-            userPan
-        ] = result;
-
-        document.getElementById("userAddress").textContent = userId;
-        document.getElementById("userContactDetails").textContent = userContact;
-        document.getElementById("userEmailDetails").textContent = userEmailAddress;
-        document.getElementById("userPreferenceDetails").textContent = userPreference;
-        document.getElementById("userRoleDetails").textContent = userRole;
-        document.getElementById("userAmountRecivedDetails").textContent = amountRecived + " wei";
-        document.getElementById("userAmountDonatedDetails").textContent = amountDonated + " wei";
-        document.getElementById("userProofDetails").innerHTML = `<a href="${userProof}" target="_blank">View</a>`;
-        document.getElementById("userPanDetails").textContent = `<a href="${userPan}" target="_blank">View</a>`;
+        document.getElementById("userAddress").textContent = result[0];
+        document.getElementById("userContactDetails").textContent = result[5];
+        document.getElementById("userEmailDetails").textContent = result[6];
+        document.getElementById("userPreferenceDetails").textContent = result[7];
+        document.getElementById("userRoleDetails").textContent = result[2];
+        document.getElementById("userAmountRecivedDetails").textContent = result[3] + " wei";
+        document.getElementById("userAmountDonatedDetails").textContent = result[4] + " wei";
+        document.getElementById("userProofDetails").innerHTML = `<a href="${result[1]}" target="_blank">View</a>`;
+        document.getElementById("userPanDetails").innerHTML = `<a href="${result[8]}" target="_blank">View</a>`;
 
     } catch (error) {
         console.error("Error fetching user details:", error);
@@ -354,16 +339,18 @@ async function displayUserDetails(userAddress) {
 // VIEW CAMPAIGN
 // ======================
 
-document.getElementById('searchButton').addEventListener('click', () => {
-    const searchCampaignId = document.getElementById('searchCampaignId').value;
-    if (searchCampaignId) {
-        displayCampaignDetails(searchCampaignId);
-    } else {
-        alert("Please enter a valid Campaign ID.");
-    }
+document.addEventListener('DOMContentLoaded',() => {
+	document.getElementById('searchButton').addEventListener('click', () => {
+	    const searchCampaignId = document.getElementById('searchCampaignId').value;
+	    if (searchCampaignId) {
+		displayAllCampaignDetails(searchCampaignId);
+	    } else {
+		alert("Please enter a valid Campaign ID.");
+	    }
+	});
 });
 
-async function displayCampaignDetails(campaignId) {
+async function displayAllCampaignDetails(campaignId) {
     if (typeof window.ethereum === 'undefined') {
         alert("Please install MetaMask to interact with the blockchain.");
         return;
@@ -376,51 +363,38 @@ async function displayCampaignDetails(campaignId) {
     try {
         const result = await contract.methods.viewCampaign(campaignId).call();
 
-        const [
-            owner,
-            title,
-            description,
-            targetAmount,
-            deadline,
-            amountCollected,
-            medicalProof,
-            image,
-            donators,
-            donations
-        ] = result;
-
         const campaignInfoDiv = document.getElementById("campaignInfo");
 
         const imageHTML = image 
-            ? `<img src="${image}" alt="${title}" class="campaign-image">` 
+            ? `<img src="${result[7]}" alt="${result[1]}" class="campaign-image">` 
             : '';
 
         const medicalProofHTML = medicalProof 
-            ? `<img src="${medicalProof}" alt="${title}" class="campaign-image">` 
+            ? `<img src="${result[6]}" alt="${result[1]}" class="campaign-image">` 
             : '';
 
         // Clear previous data
         campaignInfoDiv.innerHTML = `
-            <p><strong>Title:</strong> ${title}</p>
-            <p><strong>Description:</strong> ${description}</p>
+            <p><strong>Title:</strong> ${result[1]}</p>
+            <p><strong>Description:</strong> ${result[2]}</p>
             ${medicalProofHTML}
             ${imageHTML}
-            <p><strong>Owner:</strong> ${owner}</p>
-            <p><strong>Target Amount:</strong> ${targetAmount} wei</p>
-            <p><strong>Deadline:</strong> ${deadline}</p>
-            <p><strong>Amount Collected:</strong> ${amountCollected} wei</p>
+            <p><strong>Owner:</strong> ${result[0]}</p>
+            <p><strong>Target Amount:</strong> ${result[3]} wei</p>
+            <p><strong>Deadline:</strong> ${result[4]}</p>
+            <p><strong>Amount Collected:</strong> ${result[5]} wei</p>
         `;
 
         // Build Donators and Donations table
-        if (donators.length > 0) {
+        if (result[8].length > 0) {
             let tableHTML = `
                 <h3>Donators & Donations</h3>
                 <table border="1" cellspacing="0" cellpadding="8">
                     <tr><th>Donator</th><th>Donation (wei)</th></tr>
             `;
 
-            for (let i = 0; i < donators.length; i++) {
-                tableHTML += `<tr><td>${donators[i]}</td><td>${donations[i]}</td></tr>`;
+            for (let i = 0; i < result[8].length; i++) {
+                tableHTML += `<tr><td>${result[8][i]}</td><td>${result[9][i]}</td></tr>`;
             }
 
             tableHTML += `</table>`;
@@ -439,8 +413,9 @@ async function displayCampaignDetails(campaignId) {
 // ======================
 
 // Add event listener to the donate button
-document.getElementById('donateButton').addEventListener('click', donateToCampaign);
-
+document.addEventListener('DOMContentLoaded',() => {
+	document.getElementById('donateButton').addEventListener('click', donateToCampaign);
+});
 // Function to handle donation
 async function donateToCampaign() {
     const campaignId = document.getElementById('campaignId').value;
@@ -466,12 +441,12 @@ async function donateToCampaign() {
 
         // Call the donateCampaign function in the smart contract
         await contract.methods.donateCampaign(campaignId).send({
-            from: web3.eth.defaultAccount,
+            from: accounts[0],
             value: amountInWei
         });
 
         alert("Donation successful! Thank you for your contribution.");
-        window.location.href = "{{ url_for('index') }}"; // Redirect to home page after donation
+        window.location.href = "/"; // Redirect to home page after donation
     } catch (error) {
         console.error("Error donating to campaign:", error);
         alert("Failed to donate. Please check the console for details.");
@@ -498,7 +473,7 @@ function displayCampaignDetails(id, title, description, imageUrl) {
         <h2>Campaign ID: ${id}</h3>
         <h3>Title:\n${title}</h3>
         <p>Description:\n${description}</p>
-        <a href="view_campaign.html" class="btn">View Campaign</a>
+        <a href="view_campaign?cid=${id}" class="btn">View Campaign</a>
     `;
     
     container.appendChild(campaignElement);
