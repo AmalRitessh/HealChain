@@ -244,5 +244,5 @@ besu --data-path=data --genesis-file=../genesis.json --bootnodes=<Node-1 Enode U
 Open a new terminal and use `curl` to call the JSON-RPC API method `ibft_getValidatorsByBlockNumber` to confirm that the network recognizes all four validators.
 
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"ibft_getValidatorsByBlockNumber","params":["latest"], "id":1}' localhost:8545
+curl -X POST --data '{"jsonrpc":"2.0","method":"ibft_getValidatorsByBlockNumber","params":["latest"], "id":1}' <ip-address>:8545
 ```
