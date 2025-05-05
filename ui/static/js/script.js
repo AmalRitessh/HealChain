@@ -2,20 +2,70 @@
 let web3;
 let contractInstance;
 let contractAddress = 'YOUR_CONTRACT_ADDRESS';
-let contractAbi = [/* Your contract ABI */];
+let contractABI = [/* Your contract ABI */];
 
-// Initialize Web3
+// Initialize web3
 async function initWeb3() {
+    const desiredNetwork = {
+        chainId: '0x539', // Example: 1337 in hex (Ganache), change as needed
+        chainName: 'healchain',
+        rpcUrls: ['http://<ip-address>:8545'], // Your private node's URL
+        nativeCurrency: {
+            name: 'ETH',
+            symbol: 'ETH',
+            decimals: 18
+        }
+    };
+
     if (window.ethereum) {
         web3 = new Web3(window.ethereum);
-        await window.ethereum.enable();
-    } else if (window.web3) {
-        web3 = new Web3(window.web3.currentProvider);
+
+        try {
+            const currentChainId = await web3.eth.getChainId();
+
+            if (currentChainId !== parseInt(desiredNetwork.chainId, 16)) {
+                try {
+                    await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: desiredNetwork.chainId }],
+                    });
+                } catch (switchError) {
+                    if (switchError.code === 4902) {
+                        // Chain not added to MetaMask
+                        try {
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [desiredNetwork],
+                            });
+                        } catch (addError) {
+                            console.error("Failed to add the network", addError);
+                            return;
+                        }
+                    } else {
+                        console.error("Failed to switch network", switchError);
+                        return;
+                    }
+                }
+            }
+
+            // Request account access
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            const accounts = await web3.eth.getAccounts();
+
+            document.getElementById('connectButton').innerText = `Connected: ${accounts[0]}`;
+            
+            // Initialize contract
+            contract = new web3.eth.Contract(contractABI, contractAddress);
+            fetchAndDisplayCampaigns();
+        } catch (error) {
+            console.error("User denied account access or network switch failed", error);
+        }
+
     } else {
-        console.log('No Ethereum provider detected.');
+        alert("MetaMask is not installed. Please install it to use this DApp.");
     }
-    contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 }
+
 
 // ======================
 // POPUP CONTROL FUNCTIONS
@@ -63,7 +113,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cancelViewUserButton')?.addEventListener('click', closeViewUserForm);
     
     // Fetch user details button (NEW)
-    document.getElementById('fetchUserDetailsButton')?.addEventListener('click', displayUserDetails);
+    document.getElementById('fetchUserDetailsButton')?.addEventListener('click', async () => {
+        const userAddress = document.getElementById('userId').value;
+        await displayUserDetails(userAddress);
+    });
     
     // Initialize counter
     document.getElementById('activeCampaigns').textContent = 0;
