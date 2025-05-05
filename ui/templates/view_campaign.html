@@ -10,7 +10,7 @@
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </head>
 
-<body>
+<body onload = "loadCampaignDetails()">
     <header class="header">
         <div class="container">
             <h1 class="heading">HEAL CHAIN.</h1>
@@ -82,5 +82,14 @@
     </section>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+    	function loadCampaignDetails(){
+    		const urlParms = new URLSearchParams(window.location.search);
+    		const cid = urlParms.get("cid");
+    		if (cid){
+    			displayAllCampaignDetails(cid);
+    		}
+    	}
+    </script>
 </body>
 </html>
